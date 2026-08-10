@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nexus AI</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,Helvetica,sans-serif;
+scroll-behavior:smooth;
+}
+
+body{
+background:#0b1020;
+color:white;
+}
+
+header{
+background:#111827;
+padding:20px 8%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+position:sticky;
+top:0;
+z-index:100;
+}
+
+.logo{
+font-size:30px;
+font-weight:bold;
+color:#4fc3ff;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+margin-left:20px;
+transition:.3s;
+}
+
+nav a:hover{
+color:#4fc3ff;
+}
+
+.hero{
+height:90vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+background:linear-gradient(135deg,#0b1020,#1f3c88);
+padding:20px;
+}
+
+.hero h1{
+font-size:60px;
+margin-bottom:20px;
+}
+
+.hero span{
+color:#4fc3ff;
+}
+
+.hero p{
+max-width:700px;
+font-size:20px;
+color:#ddd;
+margin-bottom:30px;
+}
+
+.button{
+display:inline-block;
+padding:15px 35px;
+background:#4fc3ff;
+color:#111827;
+text-decoration:none;
+border-radius:40px;
+font-weight:bold;
+}
+
+section{
+padding:80px 8%;
+}
+
+h2{
+text-align:center;
+font-size:40px;
+margin-bottom:40px;
+}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:25px;
+}
+
+.card{
+background:#18253b;
+padding:30px;
+border-radius:15px;
+transition:.3s;
+}
+
+.card:hover{
+transform:translateY(-8px);
+}
+
+.card h3{
+color:#4fc3ff;
+margin-bottom:15px;
+}
+
+.chat-demo{
+background:#18253b;
+padding:25px;
+border-radius:15px;
+max-width:800px;
+margin:auto;
+}
+
+.messages{
+height:250px;
+background:#0d1728;
+border-radius:10px;
+padding:15px;
+overflow:auto;
+margin-bottom:15px;
+}
+
+.message{
+background:#263850;
+padding:10px;
+border-radius:8px;
+margin-bottom:10px;
+}
+
+input{
+width:100%;
+padding:15px;
+border:none;
+border-radius:10px;
+font-size:16px;
+}
+
+.points{
+text-align:center;
+font-size:50px;
+color:#4fc3ff;
+margin:20px 0;
+}
+
+.reward-bar{
+background:#2a3445;
+height:20px;
+border-radius:20px;
+overflow:hidden;
+}
+
+.reward-fill{
+height:100%;
+width:65%;
+background:#4fc3ff;
+}
+
+.price{
+text-align:center;
+font-size:55px;
+color:#4fc3ff;
+margin:20px 0;
+}
+
+footer{
+background:#111827;
+padding:30px;
+text-align:center;
+margin-top:50px;
+color:#aaa;
+}
+
+@media(max-width:700px){
+
+.hero h1{
+font-size:40px;
+}
+
+.hero p{
+font-size:18px;
+}
+
+nav{
+display:none;
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">Nexus AI</div>
+
+<nav>
+<a href="#features">Features</a>
+<a href="#homework">Homework</a>
+<a href="#notes">Notes</a>
+<a href="#rewards">Rewards</a>
+<a href="#premium">Premium</a>
+</nav>
+
+</header>
+
+<section class="hero">
+
+<h1>Study Smarter with <span>Nexus AI</span></h1>
+
+<p>
+Your homework helper, study companion and note organiser.
+Earn rewards while learning and unlock Premium features.
+</p>
+
+<a href="#features" class="button">Get Started</a>
+
+</section>
+
+<section id="features">
+
+<h2>Features</h2>
+
+<div class="cards">
+
+<div class="card">
+<h3>📚 Homework Helper</h3>
+<p>Ask questions and receive guided explanations.</p>
+</div>
+
+<div class="card">
+<h3>📝 Note Summariser</h3>
+<p>Turn long notes into quick study summaries.</p>
+</div>
+
+<div class="card">
+<h3>🏆 Nexus Rewards</h3>
+<p>Earn Nexus Points for completing study sessions.</p>
+</div>
+
+<div class="card">
+<h3>⭐ Premium</h3>
+<p>Unlock extra features and future AI tools.</p>
+</div>
+
+</div>
+
+</section>
+
+<section id="homework">
+
+<h2>Homework Helper</h2>
+
+<div class="chat-demo">
+
+<div class="messages">
+
+<div class="message">
+Welcome to Nexus AI!
+</div>
+
+<div class="message">
+Ask your homework questions here...
+</div>
+
+</div>
+
+<input type="text" placeholder="Type your homework question...">
+
+</div>
+
+</section>
+
+<section id="notes">
+
+<h2>Note Summariser</h2>
+
+<div class="chat-demo">
+
+<p style="margin-bottom:20px;">
+Paste your notes below to generate a summary.
+</p>
+
+<textarea style="width:100%;height:180px;padding:15px;border-radius:10px;border:none;font-size:16px;" placeholder="Paste your notes here..."></textarea>
+
+<br><br>
+
+<a href="#" class="button">Summarise Notes</a>
+
+</div>
+
+</section>
+
+<section id="rewards">
+
+<h2>Nexus Rewards</h2>
+
+<div class="points">2,450 XP</div>
+
+<p style="text-align:center;margin-bottom:20px;">
+Next Reward: Premium Theme
+</p>
+
+<div class="reward-bar">
+<div class="reward-fill"></div>
+</div>
+
+</section>
+
+<section id="premium">
+
+<h2>Nexus Premium</h2>
+
+<div class="price">$9.99<span style="font-size:22px;"> / month</span></div>
+
+<div class="cards">
+
+<div class="card">
+<h3>Unlimited Homework Help</h3>
+</div>
+
+<div class="card">
+<h3>Advanced Study Tools</h3>
+</div>
+
+<div class="card">
+<h3>Priority Features</h3>
+</div>
+
+<div class="card">
+<h3>Exclusive Themes</h3>
+</div>
+
+</div>
+
+</section>
+
+<footer>
+
+<p>© 2026 Nexus AI Demo Website</p>
+
+<p>Website mockup only — AI functionality coming later.</p>
+
+</footer>
+
+</body>
+</html>
