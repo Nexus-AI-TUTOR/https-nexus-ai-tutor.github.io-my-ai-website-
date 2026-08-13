@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nexus AI</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,Helvetica,sans-serif;
+  scroll-behavior:smooth;
+}
+
+body{
+  background:#0b1020;
+  color:white;
+}
+
+header{
+  background:#111827;
+  padding:20px 8%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  position:sticky;
+  top:0;
+  z-index:100;
+}
+
+.logo{
+  font-size:30px;
+  font-weight:bold;
+  color:#4fc3ff;
+}
+
+nav a{
+  color:white;
+  text-decoration:none;
+  margin-left:20px;
+  transition:.3s;
+}
+
+nav a:hover{
+  color:#4fc3ff;
+}
+
+.hero{
+  height:90vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  background:linear-gradient(135deg,#0b1020,#1f3c88);
+  padding:20px;
+}
+
+.hero h1{
+  font-size:60px;
+  margin-bottom:20px;
+}
+
+.hero span{
+  color:#4fc3ff;
+}
+
+.hero p{
+  max-width:700px;
+  font-size:20px;
+  color:#ddd;
+  margin-bottom:30px;
+}
+
+.button{
+  display:inline-block;
+  padding:15px 35px;
+  background:#4fc3ff;
+  color:#111827;
+  text-decoration:none;
+  border-radius:40px;
+  font-weight:bold;
+  border:none;
+  cursor:pointer;
+  transition:0.2s;
+  text-align:center;
+}
+
+.button:hover{
+  background:#80d4ff;
+  transform:scale(1.03);
+}
+
+section{
+  padding:80px 8%;
+}
+
+h2{
+  text-align:center;
+  font-size:40px;
+  margin-bottom:40px;
+}
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:25px;
+}
+
+.card{
+  background:#18253b;
+  padding:30px;
+  border-radius:15px;
+  transition:.3s;
+}
+
+.card:hover{
+  transform:translateY(-8px);
+}
+
+.card h3{
+  color:#4fc3ff;
+  margin-bottom:15px;
+}
+
+.chat-demo{
+  background:#18253b;
+  padding:25px;
+  border-radius:15px;
+  max-width:800px;
+  margin:auto;
+}
+
+.messages{
+  height:300px;
+  background:#0d1728;
+  border-radius:10px;
+  padding:15px;
+  overflow-y:auto;
+  margin-bottom:15px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.message{
+  background:#263850;
+  padding:12px;
+  border-radius:8px;
+  max-width:85%;
+  line-height:1.5;
+}
+
+.message.user{
+  align-self:flex-end;
+  background:#1f3c88;
+  color:#fff;
+}
+
+.message.ai{
+  align-self:flex-start;
+  background:#263850;
+  color:#e0e0e0;
+}
+
+.chat-input-container {
+  display: flex;
+  gap: 10px;
+}
+
+input, textarea, select{
+  width:100%;
+  padding:15px;
+  border:none;
+  border-radius:10px;
+  font-size:16px;
+  background:#0d1728;
+  color:#fff;
+  outline:none;
+}
+
+input:focus, textarea:focus, select:focus{
+  box-shadow:0 0 0 2px #4fc3ff;
+}
+
+/* Quiz Section Styling */
+.quiz-controls {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.question-box {
+  background: #0d1728;
+  padding: 25px;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+  color: #4fc3ff;
+  margin-bottom: 20px;
+}
+
+.options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.option-btn {
+  background: #263850;
+  color: white;
+  border: 2px solid transparent;
+  padding: 15px;
+  border-radius: 10px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.option-btn:hover {
+  background: #324a6a;
+}
+
+.option-btn.correct {
+  background: #10b981 !important;
+  color: white;
+}
+
+.option-btn.wrong {
+  background: #ef4444 !important;
+  color: white;
+}
+
+.feedback {
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  min-height: 25px;
+}
+
+/* Math Space Defender Styling */
+.game-container {
+  background: #050b14;
+  border: 2px solid #1f3c88;
+  border-radius: 15px;
+  max-width: 800px;
+  margin: auto;
+  overflow: hidden;
+  position: relative;
+}
+
+.game-hud {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 25px;
+  background: #0d1728;
+  font-size: 18px;
+  font-weight: bold;
+  color: #4fc3ff;
+}
+
+.game-canvas {
+  height: 320px;
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(circle at center, #111e38 0%, #050b14 100%);
+}
+
+.target-meteor {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #ff416c, #ff4b2b);
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-size: 24px;
+  font-weight: bold;
+  box-shadow: 0 0 15px rgba(255, 75, 43, 0.6);
+  white-space: nowrap;
+}
+
+.defender-ship {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 40px;
+}
+
+.game-controls {
+  padding: 20px;
+  background: #0d1728;
+  display: flex;
+  gap: 10px;
+}
+
+.summary-output{
+  margin-top:20px;
+  background:#0d1728;
+  padding:15px;
+  border-radius:10px;
+  display:none;
+  line-height:1.6;
+}
+
+.summary-output h4{
+  color:#4fc3ff;
+  margin-bottom:10px;
+}
+
+/* Rewards Tracks Styling */
+.points{
+  text-align:center;
+  font-size:50px;
+  color:#4fc3ff;
+  margin:20px 0;
+  font-weight:bold;
+}
+
+.reward-bar{
+  background:#2a3445;
+  height:20px;
+  border-radius:20px;
+  overflow:hidden;
+  max-width:800px;
+  margin:0 auto 30px auto;
+}
+
+.reward-fill{
+  height:100%;
+  width:65%;
+  background:#4fc3ff;
+  transition:width 0.4s ease;
+}
+
+.rewards-tracks {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.track {
+  background: #18253b;
+  padding: 20px;
+  border-radius: 15px;
+}
+
+.track h3 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #4fc3ff;
+  font-size: 24px;
+}
+
+.premium-track h3 {
+  color: #f59e0b; /* Gold for premium */
+}
+
+.track ul {
+  list-style: none;
+}
+
+.track li {
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  background: #263850;
+  text-align: center;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.track li.unlocked {
+  background: #10b981; /* Green when unlocked */
+  color: white;
+  box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
+}
+
+.track li.locked {
+  opacity: 0.5;
+}
+
+.price{
+  text-align:center;
+  font-size:55px;
+  color:#4fc3ff;
+  margin:20px 0;
+}
+
+footer{
+  background:#111827;
+  padding:30px;
+  text-align:center;
+  margin-top:50px;
+  color:#aaa;
+}
+
+@media(max-width:700px){
+  .hero h1{
+    font-size:40px;
+  }
+  .hero p{
+    font-size:18px;
+  }
+  nav{
+    display:none;
+  }
+  .options-grid {
+    grid-template-columns: 1fr;
+  }
+  .quiz-controls, .game-controls {
+    flex-direction: column;
+  }
+  .rewards-tracks {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">Nexus AI</div>
+  <nav>
+    <a href="#features">Features</a>
+    <a href="#homework">Homework</a>
+    <a href="#game">Math Game</a>
+    <a href="#practice">Practice</a>
+    <a href="#notes">Notes</a>
+    <a href="#rewards">Rewards</a>
+    <a href="#premium">Premium</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>Study Smarter with <span>Nexus AI</span></h1>
+  <p>Your homework helper, study companion and note organiser. Earn rewards while learning and unlock Premium features.</p>
+  <a href="#features" class="button">Get Started</a>
+</section>
+
+<section id="features">
+  <h2>Features</h2>
+  <div class="cards">
+    <div class="card">
+      <h3>📚 Homework Helper</h3>
+      <p>Ask questions and receive step-by-step explanations for advanced math equations instantly.</p>
+    </div>
+    <div class="card">
+      <h3>🚀 Math Space Defender</h3>
+      <p>Blast space math meteors to protect the base and earn XP! Great for quick mental math.</p>
+    </div>
+    <div class="card">
+      <h3>✏️ Math Practice</h3>
+      <p>Interactive quiz mode for addition, subtraction, multiplication, and division.</p>
+    </div>
+    <div class="card">
+      <h3>📝 Note Summariser</h3>
+      <p>Turn long study notes into quick key-point summaries.</p>
+    </div>
+  </div>
+</section>
+
+<section id="homework">
+  <h2>Homework Helper</h2>
+  <div class="chat-demo">
+    <div class="messages" id="chatContainer">
+      <div class="message ai">Welcome to Nexus AI!</div>
+      <div class="message ai">Type any math equation and I will explain step-by-step how to solve it (e.g., "12 + 5 - 3 + 8", "10 + 2 * 5", "sqrt(16) + 2^3").</div>
+    </div>
+    <div class="chat-input-container">
+      <input type="text" id="chatInput" placeholder="Type your math equation or question...">
+      <button class="button" id="sendBtn">Send</button>
+    </div>
+  </div>
+</section>
+
+<section id="game">
+  <h2>🚀 Math Space Defender Game</h2>
+  <div class="game-container">
+    <div class="game-hud">
+      <div>Score: <span id="gameScore">0</span></div>
+      <div>Health: <span id="gameHealth">❤️❤️❤️</span></div>
+    </div>
+
+    <div class="game-canvas" id="gameCanvas">
+      <div class="target-meteor" id="targetMeteor">Press Start!</div>
+      <div class="defender-ship">🚀</div>
+    </div>
+
+    <div class="game-controls">
+      <input type="number" id="gameInput" placeholder="Type answer and press Enter..." disabled>
+      <button class="button" id="startGameBtn">Start Game</button>
+    </div>
+  </div>
+</section>
+
+<section id="practice">
+  <h2>Math Practice Quiz</h2>
+  <div class="chat-demo">
+    <div class="quiz-controls">
+      <select id="modeSelect">
+        <option value="addition">Addition (+)</option>
+        <option value="subtraction">Subtraction (-)</option>
+        <option value="multiplication">Multiplication (×)</option>
+        <option value="division">Division (÷)</option>
+        <option value="mix" selected>Mixed Operations</option>
+      </select>
+      <button class="button" id="generateQuestionBtn">New Question</button>
+    </div>
+
+    <div class="question-box" id="questionText">Press "New Question" to begin!</div>
+
+    <div class="options-grid" id="optionsContainer">
+      <button class="option-btn" disabled>-</button>
+      <button class="option-btn" disabled>-</button>
+      <button class="option-btn" disabled>-</button>
+      <button class="option-btn" disabled>-</button>
+    </div>
+
+    <div class="feedback" id="quizFeedback"></div>
+  </div>
+</section>
+
+<section id="notes">
+  <h2>Note Summariser</h2>
+  <div class="chat-demo">
+    <p style="margin-bottom:20px;">Paste your notes below to generate a summary.</p>
+    <textarea id="noteInput" style="height:180px;" placeholder="Paste your notes here..."></textarea>
+    <br><br>
+    <button class="button" id="summariseBtn">Summarise Notes</button>
+
+    <div class="summary-output" id="summaryOutput">
+      <h4>Summary Output:</h4>
+      <p id="summaryText"></p>
+    </div>
+  </div>
+</section>
+
+<section id="rewards">
+  <h2>Nexus Rewards</h2>
+  <div class="points" id="pointsDisplay">2,450 XP</div>
+  <p style="text-align:center;margin-bottom:20px;" id="rewardStatus">Complete tasks to unlock rewards!</p>
+  
+  <div class="reward-bar">
+    <div class="reward-fill" id="rewardFill"></div>
+  </div>
+
+  <div class="rewards-tracks">
+    <div class="track free-track">
+      <h3>Free Track</h3>
+      <ul>
+        <li class="reward-item locked" data-xp="2000">2,000 XP - Starter Avatar</li>
+        <li class="reward-item locked" data-xp="2600">2,600 XP - Bronze Scholar Badge</li>
+        <li class="reward-item locked" data-xp="3000">3,000 XP - Dark Mode Unlock</li>
+      </ul>
+    </div>
+    
+    <div class="track premium-track">
+      <h3>Premium Track 👑</h3>
+      <ul>
+        <li class="reward-item locked" data-xp="2000">2,000 XP - +10% XP Boost</li>
+        <li class="reward-item locked" data-xp="2600">2,600 XP - Animated Profile Frame</li>
+        <li class="reward-item locked" data-xp="3000">3,000 XP - Galaxy UI Theme</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="premium">
+  <h2>Nexus Premium</h2>
+  <div class="price">$9.99<span style="font-size:22px;"> / month</span></div>
+  <div class="cards">
+    <div class="card">
+      <h3>Unlimited Homework Help</h3>
+    </div>
+    <div class="card">
+      <h3>Premium Reward Track</h3>
+    </div>
+    <div class="card">
+      <h3>Priority Features</h3>
+    </div>
+    <div class="card">
+      <h3>Exclusive Themes</h3>
+    </div>
+  </div>
+  <div style="text-align: center; margin-top: 30px;">
+    <button class="button" id="upgradeBtn">Upgrade to Premium</button>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Nexus AI Interactive Website</p>
+</footer>
+
+<script>
+  // ==========================================
+  // 1. GLOBAL XP REWARDS SYSTEM
+  // ==========================================
+  let currentXP = 2450;
+  const targetXP = 3000;
+
+  function addXP(amount) {
+    currentXP += amount;
+    const pointsDisplay = document.getElementById('pointsDisplay');
+    const rewardFill = document.getElementById('rewardFill');
+    
+    pointsDisplay.textContent = currentXP.toLocaleString() + ' XP';
+    
+    let percentage = Math.min((currentXP / targetXP) * 100, 100);
+    rewardFill.style.width = percentage + '%';
+
+    checkRewardMilestones();
+  }
+
+  function checkRewardMilestones() {
+    const rewardItems = document.querySelectorAll('.reward-item');
+    let nextMilestone = null;
+
+    rewardItems.forEach(item => {
+      const requiredXP = parseInt(item.getAttribute('data-xp'));
+      
+      if (currentXP >= requiredXP) {
+        item.classList.remove('locked');
+        item.classList.add('unlocked');
+        if (!item.textContent.includes('✅')) {
+          item.textContent = '✅ ' + item.textContent;
+        }
+      } else {
+        if (!nextMilestone || requiredXP < nextMilestone) {
+          nextMilestone = requiredXP;
+        }
+      }
+    });
+
+    const statusText = document.getElementById('rewardStatus');
+    if (nextMilestone) {
+      statusText.textContent = `Keep going! Next milestone at ${nextMilestone.toLocaleString()} XP.`;
+    } else {
+      statusText.textContent = "🎉 All current milestones unlocked! Outstanding work!";
+    }
+  }
+
+  checkRewardMilestones();
+
+
+  // ==========================================
+  // 2. HOMEWORK HELPER (WITH STEP-BY-STEP)
+  // ==========================================
+  const chatInput = document.getElementById('chatInput');
+  const chatContainer = document.getElementById('chatContainer');
+  const sendBtn = document.getElementById('sendBtn');
+
+  const defaultAiReplies = [
+    "Great question! To solve this, break down the main concept step-by-step.",
+    "That's a key topic! Focus on the core definitions and key rules first.",
+    "Try writing out your given variables before starting the solution.",
+    "Good question! Double-check your core assumptions and formulas."
+  ];
+
+  // Protect against basic XSS for text generation
+  function escapeHTML(str) {
+    return str.replace(/[&<>'"]/g, function(tag) {
+      const charsToReplace = { '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' };
+      return charsToReplace[tag] || tag;
+    });
+  }
+
+  function evaluateFullMathExpression(text) {
+    let cleanText = text.toLowerCase()
+      .replace(/x|×/g, '*')
+      .replace(/÷/g, '/')
+      .replace(/√/g, 'sqrt')
+      .replace(/\bpi\b|π/g, 'Math.PI')
+      .replace(/\be\b/g, 'Math.E')
+      .replace(/\bsin\b/g, 'Math.sin')
+      .replace(/\bcos\b/g, 'Math.cos')
+      .replace(/\btan\b/g, 'Math.tan')
+      .replace(/\bsqrt\b/g, 'Math.sqrt')
+      .replace(/\blog10\b|\blog\b/g, 'Math.log10')
+      .replace(/\bln\b/g, 'Math.log');
+
+    while (cleanText.includes('^')) {
+      cleanText = cleanText.replace(/([0-9\.\)\w]+)\s*\^\s*([0-9\.\)\w]+)/, 'Math.pow($1, $2)');
+    }
+
+    const mathMatch = cleanText.match(/(?:Math\.\w+|[0-9\.]+|[\+\-\*\/\(\)\^\,\s])+/);
+    if (!mathMatch) return null;
+
+    let exprToEval = mathMatch[0].trim();
+    if (!/[0-9]/.test(exprToEval)) return null;
+
+    try {
+      if (/[^0-9\+\-\*\/\.\(\)\,\s\w]/.test(exprToEval)) return null;
+      let result = Function('"use strict"; return (' + exprToEval + ')')();
+      
+      if (typeof result === 'number' && !isNaN(result)) {
+        if (!Number.isInteger(result)) {
+          result = Math.round(result * 100000000) / 100000000; 
+        }
+
+        let safeText = escapeHTML(text.trim());
+        let explanation = "";
+
+        // Check if it's a simple 2-number problem to give detailed verbal steps
+        let simpleMatch = text.match(/^\s*([0-9\.]+)\s*([\+\-\*\/\×\÷])\s*([0-9\.]+)\s*$/);
+        
+        if (simpleMatch) {
+            let num1 = simpleMatch[1];
+            let op = simpleMatch[2];
+            let num2 = simpleMatch[3];
+            
+            if (op === '+') {
+              explanation = `<strong>Step 1:</strong> Identify the numbers to add (${num1} and ${num2}).<br><strong>Step 2:</strong> Combine them together.<br><br><strong>Answer:</strong> ${result}`;
+            } else if (op === '-') {
+              explanation = `<strong>Step 1:</strong> Start with your initial value (${num1}).<br><strong>Step 2:</strong> Subtract ${num2} from it.<br><br><strong>Answer:</strong> ${result}`;
+            } else if (op === '*' || op === '×') {
+              explanation = `<strong>Step 1:</strong> Take the number ${num1}.<br><strong>Step 2:</strong> Multiply it by ${num2}.<br><br><strong>Answer:</strong> ${result}`;
+            } else if (op === '/' || op === '÷') {
+              explanation = `<strong>Step 1:</strong> Take the total amount (${num1}).<br><strong>Step 2:</strong> Divide it evenly by ${num2}.<br><br><strong>Answer:</strong> ${result}`;
+            }
+        } else {
+            // For complex expressions, explain the order of operations
+            explanation = `To solve <strong>${safeText}</strong>, we use the Order of Operations (PEMDAS):<br><br>
+            • <strong>P</strong>arentheses first.<br>
+            • <strong>E</strong>xponents (powers and roots) next.<br>
+            • <strong>M</strong>ultiplication & <strong>D</strong>ivision (left to right).<br>
+            • <strong>A</strong>ddition & <strong>S</strong>ubtraction (left to right).<br><br>
+            By computing the expression following these rules, we get:<br><strong>Answer:</strong> ${result}`;
+        }
+        return explanation;
+      }
+      return null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function handleSend() {
+    const userText = chatInput.value.trim();
+    if (userText !== '') {
+      const userMsg = document.createElement('div');
+      userMsg.className = 'message user';
+      userMsg.textContent = userText;
+      chatContainer.appendChild(userMsg);
+      
+      chatInput.value = '';
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+
+      setTimeout(() => {
+        const aiMsg = document.createElement('div');
+        aiMsg.className = 'message ai';
+
+        const mathExplanation = evaluateFullMathExpression(userText);
+        
+        if (mathExplanation) {
+          // Render HTML because we included <strong> and <br> for steps
+          aiMsg.innerHTML = `<span style="color:#4fc3ff;font-weight:bold;">Nexus AI:</span><br><br>${mathExplanation}`;
+        } else {
+          const reply = defaultAiReplies[Math.floor(Math.random() * defaultAiReplies.length)];
+          aiMsg.textContent = `Nexus AI: ${reply}`;
+        }
+
+        chatContainer.appendChild(aiMsg);
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+        addXP(50);
+      }, 500);
+    }
+  }
+
+  sendBtn.addEventListener('click', handleSend);
+  chatInput.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') handleSend();
+  });
+
+  // ==========================================
+  // 3. MATH SPACE DEFENDER GAME
+  // ==========================================
+  let gameActive = false;
+  let score = 0;
+  let health = 3;
+  let currentTargetAns = null;
+  let meteorPos = 0;
+  let gameInterval = null;
+  let speed = 1.2;
+
+  const targetMeteor = document.getElementById('targetMeteor');
+  const gameInput = document.getElementById('gameInput');
+  const gameScore = document.getElementById('gameScore');
+  const gameHealth = document.getElementById('gameHealth');
+  const startGameBtn = document.getElementById('startGameBtn');
+
+  function spawnMeteor() {
+    meteorPos = 0;
+    targetMeteor.style.top = '0px';
+
+    const op = ['+', '-', '*'][Math.floor(Math.random() * 3)];
+    let n1, n2;
+
+    if (op === '+') {
+      n1 = Math.floor(Math.random() * 20) + 1;
+      n2 = Math.floor(Math.random() * 20) + 1;
+      currentTargetAns = n1 + n2;
+      targetMeteor.textContent = `${n1} + ${n2}`;
+    } else if (op === '-') {
+      n1 = Math.floor(Math.random() * 20) + 10;
+      n2 = Math.floor(Math.random() * n1) + 1;
+      currentTargetAns = n1 - n2;
+      targetMeteor.textContent = `${n1} - ${n2}`;
+    } else {
+      n1 = Math.floor(Math.random() * 9) + 2;
+      n2 = Math.floor(Math.random() * 9) + 2;
+      currentTargetAns = n1 * n2;
+      targetMeteor.textContent = `${n1} × ${n2}`;
+    }
+  }
+
+  function startGame() {
+    score = 0;
+    health = 3;
+    speed = 1.2;
+    gameActive = true;
+    gameScore.textContent = score;
+    gameHealth.textContent = '❤️❤️❤️';
+    gameInput.disabled = false;
+    gameInput.value = '';
+    gameInput.focus();
+    startGameBtn.textContent = 'Restart Game';
+
+    spawnMeteor();
+    clearInterval(gameInterval);
+
+    gameInterval = setInterval(() => {
+      if (!gameActive) return;
+      meteorPos += speed;
+      targetMeteor.style.top = meteorPos + 'px';
+
+      if (meteorPos >= 240) {
+        health--;
+        if (health === 2) gameHealth.textContent = '❤️❤️';
+        else if (health === 1) gameHealth.textContent = '❤️';
+        else if (health <= 0) {
+          gameHealth.textContent = '💥 Game Over';
+          endGame();
+          return;
+        }
+        spawnMeteor();
+      }
+    }, 30);
+  }
+
+  function endGame() {
+    gameActive = false;
+    clearInterval(gameInterval);
+    targetMeteor.textContent = 'Game Over!';
+    gameInput.disabled = true;
+    if (score > 0) {
+      addXP(100);
+      alert(`Game Over! You scored ${score} points and earned +100 XP!`);
+    }
+  }
+
+  gameInput.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter' && gameActive) {
+      let val = parseInt(gameInput.value);
+      if (val === currentTargetAns) {
+        score += 10;
+        speed += 0.15; // Increase difficulty slightly
+        gameScore.textContent = score;
+        gameInput.value = '';
+        spawnMeteor();
+      } else {
+        gameInput.value = ''; 
+      }
+    }
+  });
+
+  startGameBtn.addEventListener('click', startGame);
+
+  // ==========================================
+  // 4. MATH PRACTICE QUIZ
+  // ==========================================
+  let quizAnswer = null;
+  let quizAnswered = false;
+
+  const modeSelect = document.getElementById('modeSelect');
+  const questionText = document.getElementById('questionText');
+  const optionsContainer = document.getElementById('optionsContainer');
+  const quizFeedback = document.getElementById('quizFeedback');
+  const generateQuestionBtn = document.getElementById('generateQuestionBtn');
+
+  function generateQuizQuestion() {
+    quizAnswered = false;
+    quizFeedback.textContent = '';
+    
+    let mode = modeSelect.value;
+    if (mode === 'mix') {
+      const modes = ['addition', 'subtraction', 'multiplication', 'division'];
+      mode = modes[Math.floor(Math.random() * modes.length)];
+    }
+
+    let num1, num2, symbol, answer;
+
+    switch (mode) {
+      case 'addition':
+        num1 = Math.floor(Math.random() * 50) + 1;
+        num2 = Math.floor(Math.random() * 50) + 1;
+        symbol = '+';
+        answer = num1 + num2;
+        break;
+      case 'subtraction':
+        num1 = Math.floor(Math.random() * 50) + 20;
+        num2 = Math.floor(Math.random() * num1) + 1;
+        symbol = '-';
+        answer = num1 - num2;
+        break;
+      case 'multiplication':
+        num1 = Math.floor(Math.random() * 12) + 2;
+        num2 = Math.floor(Math.random() * 12) + 2;
+        symbol = '×';
+        answer = num1 * num2;
+        break;
+      case 'division':
+        num2 = Math.floor(Math.random() * 10) + 2;
+        answer = Math.floor(Math.random() * 12) + 2;
+        num1 = num2 * answer;
+        symbol = '÷';
+        break;
+    }
+
+    quizAnswer = answer;
+    questionText.textContent = `What is ${num1} ${symbol} ${num2}?`;
+
+    let choices = new Set([answer]);
+    while (choices.size < 4) {
+      let offset = (Math.floor(Math.random() * 5) + 1) * (Math.random() < 0.5 ? 1 : -1);
+      let wrongChoice = answer + offset;
+      if (wrongChoice >= 0) choices.add(wrongChoice);
+    }
+
+    let shuffledChoices = Array.from(choices).sort(() => Math.random() - 0.5);
+
+    optionsContainer.innerHTML = '';
+    shuffledChoices.forEach(choice => {
+      const btn = document.createElement('button');
+      btn.className = 'option-btn';
+      btn.textContent = choice;
+      btn.onclick = () => checkQuizAnswer(choice, btn);
+      optionsContainer.appendChild(btn);
+    });
+  }
+
+  function checkQuizAnswer(selected, button) {
+    if (quizAnswered) return;
+    quizAnswered = true;
+
+    const buttons = optionsContainer.querySelectorAll('.option-btn');
+    buttons.forEach(btn => {
+      if (parseInt(btn.textContent) === quizAnswer) {
+        btn.classList.add('correct');
+      }
+    });
+
+    if (selected === quizAnswer) {
+      quizFeedback.textContent = "🎉 Correct! +75 XP";
+      quizFeedback.style.color = "#10b981";
+      addXP(75);
+    } else {
+      button.classList.add('wrong');
+      quizFeedback.textContent = `❌ Incorrect. The correct answer was ${quizAnswer}.`;
+      quizFeedback.style.color = "#ef4444";
+    }
+  }
+
+  generateQuestionBtn.addEventListener('click', generateQuizQuestion);
+  generateQuizQuestion();
+
+  // ==========================================
+  // 5. NOTE SUMMARISER
+  // ==========================================
+  const noteInput = document.getElementById('noteInput');
+  const summariseBtn = document.getElementById('summariseBtn');
+  const summaryOutput = document.getElementById('summaryOutput');
+  const summaryText = document.getElementById('summaryText');
+
+  summariseBtn.addEventListener('click', function() {
+    const text = noteInput.value.trim();
+    if (text === '') {
+      alert('Please paste some notes into the text area first.');
+      return;
+    }
+
+    summariseBtn.textContent = 'Summarising...';
+
+    setTimeout(() => {
+      const sentences = text.split('.').filter(s => s.trim().length > 0);
+      let summaryHtml = '• Key Point 1: ' + (sentences[0] || text).trim() + '<br>';
+      if (sentences.length > 1) {
+        summaryHtml += '• Key Point 2: ' + sentences[1].trim() + '<br>';
+      }
+      summaryHtml += '• Main Takeaway: Core concepts reviewed successfully.';
+
+      summaryText.innerHTML = summaryHtml;
+      summaryOutput.style.display = 'block';
+      summariseBtn.textContent = 'Summarise Notes';
+
+      addXP(100);
+    }, 500);
+  });
+
+  // ==========================================
+  // 6. PREMIUM UPGRADE
+  // ==========================================
+  document.getElementById('upgradeBtn').addEventListener('click', function() {
+    alert('Thank you for choosing Nexus Premium! Redirecting to checkout...');
+  });
+</script>
+
+</body>
+</html>
